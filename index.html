@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For Shakthi 💗</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0d0d0f;
+  overflow:hidden;
+  color:#ffd6ec;
+}
+
+.screen{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:30px;
+  transition:opacity 0.8s ease, transform 0.8s ease;
+}
+
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:scale(1.05);
+}
+
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;
+  margin-bottom:20px;
+}
+
+p{
+  font-size:1.1rem;
+  margin:10px 0;
+}
+
+button{
+  padding:15px 30px;
+  border:none;
+  border-radius:40px;
+  font-size:1rem;
+  cursor:pointer;
+  margin:10px;
+  transition:all 0.3s ease;
+  font-weight:600;
+}
+
+.yes-btn{
+  background:linear-gradient(135deg,#ff4da6,#ff99cc);
+  color:white;
+  box-shadow:0 0 20px rgba(255,77,166,0.6);
+}
+
+.no-btn{
+  background:#222;
+  color:#ffb3d9;
+  border:1px solid #ff4da6;
+}
+
+.message{
+  margin-top:20px;
+  font-size:1rem;
+  min-height:24px;
+  color:#ff99cc;
+}
+
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+  to{
+    transform:translate(var(--x),var(--y));
+    opacity:0;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- SCREEN 1 -->
+<div class="screen" id="screen0">
+  <h1>Hey Shakthi…</h1>
+  <p>This is something I made just for you.</p>
+  <button class="yes-btn" onclick="nextScreen()">Continue 💗</button>
+</div>
+
+<!-- SCREEN 2 -->
+<div class="screen hidden" id="screen1">
+  <h1>Every moment with you feels special.</h1>
+  <p>Your smile, your laugh, your presence…</p>
+  <p>You make my world softer and brighter.</p>
+  <button class="yes-btn" onclick="nextScreen()">One more thing… 💕</button>
+</div>
+
+<!-- SCREEN 3 -->
+<div class="screen hidden" id="screen2">
+  <h1>Shakthi, will you be my Valentine? 💗</h1>
+
+  <div>
+    <button class="yes-btn" id="yesBtn" onclick="finalScreen()">YES 💖</button>
+    <button class="no-btn" id="noBtn" onclick="handleNo()">NO 😔</button>
+  </div>
+
+  <div class="message" id="noMessage"></div>
+</div>
+
+<!-- FINAL SCREEN -->
+<div class="screen hidden" id="screen3">
+  <h1>I knew you’d say yes ❤️</h1>
+  <p>Happy Valentine’s Day, my love.</p>
+</div>
+
+<script>
+let current = 0;
+let yesScale = 1;
+let noCount = 0;
+
+const messages = [
+  "Are you sure? 🥺",
+  "Please baby? 💗",
+  "Think again…",
+  "I'll keep asking 😌",
+  "You can't escape love 💕",
+  "Say yes already 😭"
+];
+
+function nextScreen(){
+  document.getElementById('screen'+current).classList.add('hidden');
+  current++;
+  document.getElementById('screen'+current).classList.remove('hidden');
+}
+
+function handleNo(){
+  const yesBtn = document.getElementById('yesBtn');
+  const msg = document.getElementById('noMessage');
+
+  if(noCount < messages.length){
+    msg.innerText = messages[noCount];
+  } else {
+    msg.innerText = "There's only one correct answer 😌";
+  }
+
+  noCount++;
+
+  yesScale += 0.3;
+  yesBtn.style.transform = `scale(${yesScale})`;
+
+  if(yesScale >= 6){
+    yesBtn.style.position = 'fixed';
+    yesBtn.style.top = 0;
+    yesBtn.style.left = 0;
+    yesBtn.style.width = '100vw';
+    yesBtn.style.height = '100vh';
+    yesBtn.style.borderRadius = 0;
+    yesBtn.style.fontSize = '2rem';
+  }
+}
+
+function finalScreen(){
+  document.getElementById('screen'+current).classList.add('hidden');
+  document.getElementById('screen3').classList.remove('hidden');
+  launchFireworks();
+}
+
+function launchFireworks(){
+  for(let i=0;i<120;i++){
+    const fw = document.createElement('div');
+    fw.className = 'firework';
+    fw.style.background = `hsl(${Math.random()*360},100%,70%)`;
+    fw.style.left = '50%';
+    fw.style.top = '50%';
+    fw.style.setProperty('--x', (Math.random()*600-300)+'px');
+    fw.style.setProperty('--y', (Math.random()*600-300)+'px');
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1000);
+  }
+}
+</script>
+
+</body>
+</html>
